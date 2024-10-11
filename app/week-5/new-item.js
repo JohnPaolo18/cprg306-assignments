@@ -36,6 +36,7 @@ export default function NewItem() {
                         value={itemName}
                         onChange={(event) => setItemName(event.target.value)}
                         className="p-2 bg-gray-700 text-white border border-gray-600 rounded-lg shadow-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                        required
                     />
                     <select
                         value={category}
