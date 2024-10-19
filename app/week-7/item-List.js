@@ -2,14 +2,13 @@
 
 import Item from "./item";
 import { useState } from "react";
-import itemsJson from "./items.json";
 
-export default function ItemList() {
+export default function ItemList({items}) {
     const [sortBy, setSortBy] = useState("name");
     const [groupByCategory, setGroupByCategory] = useState(false);
 
     // Sort items based on the "sortBy" state
-    const sortedItems = [...itemsJson].sort((a, b) => {
+    const sortedItems = [...items].sort((a, b) => {
         if (sortBy === "name") {
             return a.name.localeCompare(b.name);
         } else if (sortBy === "category") {
@@ -21,11 +20,15 @@ export default function ItemList() {
     // Group items by category using the reduce function
     const groupedItems = sortedItems.reduce((acc, itemObj) => {
         const category = itemObj.category;
-        if (!acc[category]) {
-            acc[category] = [];
+
+        const newAcc = { ...acc };
+
+        if (!newAcc[category]) {
+            newAcc[category] = [];
         }
-        acc[category].push(itemObj);
-        return acc;
+        newAcc[category] = [...newAcc[category], itemObj];
+        
+        return newAcc;
     }, {});
 
     return (
